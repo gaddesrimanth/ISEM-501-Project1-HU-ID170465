@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 	 <title>Srimanth Gadde World Cinemas</title>
+	 
 	 <style>
 		 #header{
 		   width: 100%;
@@ -59,8 +61,14 @@
 		 	float: right;
     		margin-right: 50px;
     	 }
-		 #para-isem-first p{
+		/* #para-isem-first p{
 		 
+		 	margin-left:50px;
+		 	margin-right:50px;
+		 	font-style: italic;
+		 } */
+		 
+		 #introduction {
 		 	margin-left:50px;
 		 	margin-right:50px;
 		 	font-style: italic;
@@ -100,6 +108,69 @@
 		 #footer-heading{
 		 	padding-top: 3px;
 		 }
+		 #contact-form{
+		 	margin-left: 50px;
+		 }
+		 #fname{
+		 	margin-left: 34px;
+		 	margin-bottom: 11px;
+   		    width: 135px;
+            height: 20px;
+		 }
+		 #lname {
+		 	margin-left: 35px;
+		 	margin-bottom: 11px;
+   		    width: 135px;
+            height: 20px; 
+		 }
+		 #email {
+		 	margin-left: 10px;
+    	    margin-bottom: 11px;
+   		    width: 135px;
+            height: 20px;
+		 }
+		 #contactNo {
+		 	margin-left: 36px;
+    	    margin-bottom: 11px;
+   		    width: 135px;
+            height: 20px;
+		 }
+		 #zipcode {
+		 	margin-left: 60px;
+    	    margin-bottom: 11px;
+   		    width: 135px;
+            height: 20px;
+		 }
+		 #btn {
+		 	width: 100px;
+    		height: 30px;
+    		font-size: medium;
+   		    border: none;
+   			background-color: #4CAF50;
+   			padding: 6px 15px;
+    		text-decoration: none;
+    		margin-left: 50px;
+		 }
+		 #fname-error{ 
+		 	color: red;
+		 	margin-left: 120px;
+		 }
+		 #lname-error{	 
+		 	color: red;
+		 	margin-left: 120px;
+		 }
+		 #email-error{	 
+		 	color: red;
+		 	margin-left: 120px;
+		 }
+		 #contact-no-error{
+		 	color: red;
+		 	margin-left: 120px;
+		 }
+		 #zipcode-error{
+		 	color: red;
+		 	margin-left: 120px;
+		 }
 		 body {background-color:#fff; margin:0;}
 	 </style>
   </head>
@@ -126,8 +197,26 @@
 				 <div id="para-isem-first">
 				    <h3><a href="HomePage-ISEM-501.html" title="Homepage">Go Back to Homepage</a></h3>
 				    <h2>Contact-Us </h2>
-					<p align="justify">Please fill out the form and provide us your information for future contact</p>
-					<img src="Contact-Us.png" title="Contact-Us-Form">
+					<p align="justify" id="introduction">Please fill out the form and provide us your information for future contact</p>
+					<!--<form name="myForm" action="HomePage-ISEM-501.html" onsubmit="return validateForm()" method="post"> -->
+						
+						<div id="contact-form">
+						   <b> First Name: </b> <input type="text" name="fname" id="fname"><br>
+						                <p id="fname-error"> </p>
+						   <b> Last Name: </b> <input type="text" name="lname" id="lname"><br>
+						                <p id="lname-error"> </p>
+						   <b> Email Address: </b> <input type="text" name="email" id="email"><br>
+						                 <p id="email-error"> </p>
+						                 
+						    <b>Contact no: </b> <input type="text" name="contactNo" id="contactNo"><br>
+						                 <p id="contact-no-error"> </p>
+						    <b>zipcode: </b> <input type="text" name="zipcode" id="zipcode"><br>
+						                 <p id="zipcode-error"> </p>
+						     
+						    <button class="btn w3-green" id="btn" onclick="inputValidation()">Submit</button> 
+					    </div>
+						<!--</form> -->
+			     <!--<img src="Contact-Us.png" title="Contact-Us-Form"> -->
 				 </div>	
 			</div>
 			<div id="right-col-isem-first">
@@ -145,4 +234,89 @@
      <div id="footer-isem-first">
          <div id="footer-heading"><h2>Visit Our Site To Know More<h2></div></div>
   </body>
+  
+  <!--Javascript Validation -->
+  <script>
+	 function inputValidation(){
+	    var fname, lname, email, contactNo, text;
+	    var nameRegex = /^[a-zA-Z ]{2,30}$/;
+	     var emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+	     var contactNoRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+	     var zipcodeRegex = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+	     var v,w,x,y,z;
+	    
+	    fname = $('#fname').val();
+	    lname = $("#lname").val();
+	    email = $("#email").val();
+	    contactNo = $("#contactNo").val();
+	    zipcode = $("#zipcode").val();
+	    
+	    
+	    //validating first name
+	    if(fname == null || fname == "" ){
+	    	document.getElementById("fname-error").innerHTML = "Please enter your first name";
+	    	$("#fname-error").show();
+	    }else if(!nameRegex.test(fname)){
+	    	document.getElementById("fname-error").innerHTML = "first name should contain only alphabets, space character between words, min 2 and max 15 characters";
+	        $("#fname-error").show();
+	    }else if(nameRegex.test(fname)){
+	    	x=true;
+	    	$("#fname-error").hide();
+	    }
+	    
+	    //validating last name
+	    if(lname == null || lname == ""){
+	    	document.getElementById("lname-error").innerHTML = "Please enter your last name";
+	    	$("#lname-error").show();
+	    }else if(!nameRegex.test(lname)){
+	    	document.getElementById("lname-error").innerHTML = "last name should contain only alphabets, space character between words, min 2 and max 15 characters";
+	        $("#lname-error").show();
+	    }else if(nameRegex.test(lname)){
+	    	y=true;
+	    	$("#lname-error").hide();
+	    }
+	          
+	    //validating email
+	    if(email == null || email == ""){
+	    	document.getElementById("email-error").innerHTML = "Please enter your email";
+	    	$("#email-error").show();
+	    }else if(!emailRegex.test(email)){
+	    	document.getElementById("email-error").innerHTML = "please provide a valid email address eg: something@something.com";
+	        $("#email-error").show();
+	    }else if(emailRegex.test(email)){
+	    	z=true;
+	    	$("#email-error").hide();
+	    }
+	    
+	    //validating contact No
+	    if(contactNo == null || contactNo == ""){
+	    	document.getElementById("contact-no-error").innerHTML = "Please enter your contact no";
+	    	$("#contact-no-error").show();
+	    }else if(!contactNoRegex.test(contactNo)){
+	    	document.getElementById("contact-no-error").innerHTML = "Please enter valid phone number that should contain numbers and correct format eg: XXX-XXX-XXXX or XXX.XXX.XXXX or XXX XXX XXXX";
+	    	$("#contact-no-error").show();
+	    }else if(contactNoRegex.test(contactNo)){
+	    	w = true;
+	    	$("#contact-no-error").hide();
+	    }
+	    
+	    //validating zipcode
+	    if(zipcode == null || zipcode == ""){
+	    	document.getElementById("zipcode-error").innerHTML = "Please enter your zipcode";
+	    	$("#zipcode-error").show();
+	    }else if(!zipcodeRegex.test(zipcode)){
+	    	document.getElementById("zipcode-error").innerHTML = "Please enter valid USA zipcode that should contain numbers eg: 56445";
+	    	$("#zipcode-error").show();
+	    }else if(zipcodeRegex.test(zipcode)){
+	    	v = true;
+	    	$("#zipcode-error").hide();
+	    }
+	    
+	    if(x && y && z && w && v){
+	    	window.location = "ThankYou.html";
+	    }
+	    
+	 }
+	 
+  </script>
 </html>
